@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+# ObjectMeta. https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/object-meta/#ObjectMeta
+metadata:
+  name: btcclock-deployment
+# DeploymentSpec. https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/deployment-v1/#DeploymentSpec
+spec:
+  # Number of desired pods.
+  replicas: 1
+  # Label selector for pods. It must match the pod template's labels.
+  selector:
+    matchLabels:
+      app: btcclock
+  # Template describes the pods that will be created.
+  template:
+    metadata:
+      labels:
+        app: btcclock
+    # PodSpec. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+    spec:
+      containers:
+      - name: btcclock
+        image: btcclock:0.0.1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
